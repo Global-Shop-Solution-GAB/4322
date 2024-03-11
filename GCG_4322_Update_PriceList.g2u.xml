@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyntaxEdit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Pages>
+    <DefaultPage>
+      <Header />
+      <Footer />
+    </DefaultPage>
+  </Pages>
+  <DisplayStrings />
+  <Selection>
+    <SelectionRect>
+      <Location>
+        <X>0</X>
+        <Y>99</Y>
+      </Location>
+      <Size>
+        <Width>24</Width>
+        <Height>2</Height>
+      </Size>
+      <X>0</X>
+      <Y>99</Y>
+      <Width>24</Width>
+      <Height>2</Height>
+    </SelectionRect>
+    <Options>UseColors OverwriteBlocks SelectLineOnTripleClick CopyLineWhenEmpty SelectWordOnCtrlClick</Options>
+  </Selection>
+  <Gutter>
+    <Options>PaintLineNumbers PaintBookMarks PaintLineModificators</Options>
+  </Gutter>
+  <Margin>
+    <Visible>false</Visible>
+  </Margin>
+  <LineStyles />
+  <LineSeparator />
+  <Printing>
+    <Footer />
+    <Header />
+  </Printing>
+  <WhiteSpace />
+  <TextSource>
+    <Position>
+      <X>0</X>
+      <Y>99</Y>
+    </Position>
+    <Lexer>
+      <Scheme>
+        <Author>Quantum Whale, LLC.</Author>
+        <Copyright>Copyright (c) 2004 - 2014 Quantum Whale LLC.</Copyright>
+        <FileType>gas</FileType>
+        <Version>1.5</Version>
+        <Styles>
+          <Style>
+            <Name>idents</Name>
+            <ForeColor>ControlText</ForeColor>
+          </Style>
+          <Style>
+            <Name>numbers</Name>
+            <ForeColor>ControlText</ForeColor>
+          </Style>
+          <Style>
+            <Name>reswords</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>comments</Name>
+            <ForeColor>Green</ForeColor>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>xmlcomments</Name>
+            <ForeColor>Gray</ForeColor>
+          </Style>
+          <Style>
+            <Name>symbols</Name>
+            <ForeColor>WindowText</ForeColor>
+          </Style>
+          <Style>
+            <Name>whitespace</Name>
+            <ForeColor>WindowText</ForeColor>
+          </Style>
+          <Style>
+            <Name>strings</Name>
+            <ForeColor>Maroon</ForeColor>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>directives</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>htmlparams</Name>
+            <ForeColor>Red</ForeColor>
+          </Style>
+          <Style>
+            <Name>syntax errors</Name>
+            <ForeColor>Red</ForeColor>
+          </Style>
+          <Style>
+            <Name>codes nippets</Name>
+            <ForeColor>Black</ForeColor>
+            <BackColor>255:180:228:180</BackColor>
+          </Style>
+          <Style>
+            <Name>GabReservedWords</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabTokenWithBrackets</Name>
+            <ForeColor>Gray</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabFunctionIntrinsicDebug</Name>
+            <ForeColor>White</ForeColor>
+            <BackColor>Red</BackColor>
+            <FontStyle>Bold</FontStyle>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>GabVariable</Name>
+            <ForeColor>Teal</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabVariableSystemDefined</Name>
+            <ForeColor>Teal</ForeColor>
+            <FontStyle>Bold Italic</FontStyle>
+          </Style>
+          <Style>
+            <Name>GabGui</Name>
+            <ForeColor>OrangeRed</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabProgramSubStartEnd</Name>
+            <ForeColor>Black</ForeColor>
+            <BackColor>LightGray</BackColor>
+            <FontStyle>Bold</FontStyle>
+            <PlainText>true</PlainText>
+          </Style>
+        </Styles>
+      </Scheme>
+    </Lexer>
+    <TextStrings>
+      <Lines>
+        <string>Program.Sub.Preflight.Start</string>
+        <string />
+        <string>Program.Sub.Preflight.End</string>
+        <string />
+        <string>Program.Sub.Main.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Main_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string />
+        <string>V.Local.sRet.Declare(String)</string>
+        <string>F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)</string>
+        <string>Function.Intrinsic.UI.ShowOpenFileDialog("", "*.xls",V.Caller.FilesDir,V.Local.sRet) </string>
+        <string>Function.Intrinsic.Control.CallSub(updateprice, "sRet", V.Local.sRet)</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Main_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	Function.Intrinsic.Control.CallSub(unload)</string>
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string>Program.Sub.Main.End</string>
+        <string />
+        <string>Program.Sub.Unload.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Unload_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string />
+        <string>F.ODBC.Connection!con.Close</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Unload_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	Function.Intrinsic.Control.End</string>
+        <string />
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string>Program.Sub.Unload.End</string>
+        <string />
+        <string>Program.Sub.UpdatePrice.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("UpdatePrice_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string />
+        <string>V.Local..BulkDeclareString(sRet, sFilter, sIn, ssql, sParts, sFile, sLines, sDate, sTime)</string>
+        <string>V.Local.iC.Declare(Long)</string>
+        <string>Function.Automation.MSExcel.ReadSpreadsheet(V.Args.sRet, V.Local.sRet)</string>
+        <string>Function.Data.DataTable.CreateFromString("EX", V.Local.sRet, "PART*!*AMT_PRICE", "STRING*!*STRING", "*!*", "$!$")</string>
+        <string>Function.Data.DataTable.DeleteRow("EX",0)</string>
+        <string>Function.Data.Dictionary.CreateFromDataTable("Dict", "EX", "Part", "AMT_PRICE")</string>
+        <string>Function.Data.Dictionary.ReturnAllPairs("Dict",V.Local.sRet)</string>
+        <string>F.Intrinsic.String.Split(V.Local.sRet, "!*!", V.Local.sRet)</string>
+        <string>F.Intrinsic.String.Replace(V.Local.sRet(0), "*!*", "','",V.Local.sIn) </string>
+        <string>'build and save to datatable</string>
+        <string>F.Intrinsic.String.Build("Select rtrim(PART) as Part, LOCATION,AMT_PRICE From INVENTORY_MSTR Where Part In ('{0}')", V.Local.sIn, V.Local.ssql)</string>
+        <string>F.Data.DataTable.CreateFromSQL("Master", "con", V.Local.ssql)</string>
+        <string>F.Data.Dictionary.setdefaultreturn("Dict", -1)</string>
+        <string>F.Data.DataTable.FillFromDictionary("Master", "Dict",  "Part", "AMT_PRICE")</string>
+        <string>F.Data.Dictionary.Close("Dict")</string>
+        <string>Function.Data.DataTable.SaveToDB("Master", "con", "INVENTORY_MSTR", "Part*!*LOCATION", 2)</string>
+        <string>'get row count for number of parts updated</string>
+        <string>V.Local.iC.set(V.DataTable.Master.RowCount)</string>
+        <string>'use table EX to find all parts not updated</string>
+        <string>F.Data.Dictionary.CreateFromSql("Dict", "con","Select rTrim(Part) as Part, AMT_PRICE From INVENTORY_MSTR")</string>
+        <string>F.Data.Dictionary.setdefaultreturn("Dict", -1)</string>
+        <string>F.Data.DataTable.FillFromDictionary("EX", "Dict", "Part", "AMT_PRICE")</string>
+        <string>V.Local.sFilter.Set("AMT_PRICE = '-1'")</string>
+        <string>Function.Data.DataView.Create("EX", "EX_V", 22,V.Local.sFilter, "")</string>
+        <string>Function.Data.DataView.ToDataTable("EX", "EX_V","ReturnT")</string>
+        <string>Function.Data.Dictionary.CreateFromDataTable("Dict2", "ReturnT", "Part", "AMT_PRICE")</string>
+        <string>Function.Data.Dictionary.ReturnAllPairs("Dict2",V.Local.sRet)</string>
+        <string>F.Intrinsic.String.Split(V.Local.sRet, "!*!", V.Local.sRet)</string>
+        <string>F.Intrinsic.String.Replace(V.Local.sRet(0), "*!*", V.Ambient.NewLine,V.Local.sParts) </string>
+        <string>'create txt</string>
+        <string>F.Intrinsic.String.Build("{0}{1}{2}", V.Local.iC, V.Ambient.NewLine, V.Local.sParts, V.Local.sLines)</string>
+        <string>'set path</string>
+        <string>'set date and time for file path</string>
+        <string>F.Intrinsic.String.Format(V.Ambient.Date, "YYYYMMDD", V.Local.sDate)</string>
+        <string>Function.Intrinsic.String.TimeStringSec(V.Ambient.Time, V.Local.sTime)</string>
+        <string>'create file name</string>
+        <string>F.Intrinsic.String.Build("{0}\PARTS_LIST_PRICE_{1}{2}.txt",V.Caller.FilesDir,V.Local.sDate,V.Local.sTime,V.Local.sFile)</string>
+        <string>F.Intrinsic.File.String2File(V.Local.sFile, V.Local.sLines)</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("UpdatePrice_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	Function.Intrinsic.Control.CallSub(unload)</string>
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string>Program.Sub.UpdatePrice.End</string>
+        <string />
+        <string>Program.Sub.Comments.Start</string>
+        <string>${$0$}$$}$DH1$}$1/24/2017 11:11:51 AM$}$False</string>
+        <string>Program.Sub.Comments.End</string>
+      </Lines>
+    </TextStrings>
+  </TextSource>
+  <Scrolling>
+    <WindowOriginY>44</WindowOriginY>
+  </Scrolling>
+  <Outlining>
+    <AllowOutlining>true</AllowOutlining>
+    <ImageSize>8</ImageSize>
+    <Ranges>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>0</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>2</Y>
+        </EndPoint>
+        <Text>Program.Sub.Preflight</Text>
+        <DisplayText>Program.Sub.Preflight</DisplayText>
+        <Visible>false</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>4</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>23</Y>
+        </EndPoint>
+        <Text>Program.Sub.Main</Text>
+        <DisplayText>Program.Sub.Main</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>25</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>42</Y>
+        </EndPoint>
+        <Text>Program.Sub.Unload</Text>
+        <DisplayText>Program.Sub.Unload</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>44</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>97</Y>
+        </EndPoint>
+        <Text>Program.Sub.UpdatePrice</Text>
+        <DisplayText>Program.Sub.UpdatePrice</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>99</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>101</Y>
+        </EndPoint>
+        <Text>Program.Sub.Comments</Text>
+        <DisplayText>Program.Sub.Comments</DisplayText>
+        <Visible>false</Visible>
+        <Level>0</Level>
+      </Range>
+    </Ranges>
+  </Outlining>
+  <HyperText />
+  <Spelling />
+  <Braces />
+</SyntaxEdit>
