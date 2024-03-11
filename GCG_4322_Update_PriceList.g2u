@@ -1,0 +1,131 @@
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+V.Local.sRet.Declare(String)
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+Function.Intrinsic.UI.ShowOpenFileDialog("", "*.xls",V.Caller.FilesDir,V.Local.sRet) 
+Function.Intrinsic.Control.CallSub(updateprice, "sRet", V.Local.sRet)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	Function.Intrinsic.Control.CallSub(unload)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.Unload.Start
+F.Intrinsic.Control.SetErrorHandler("Unload_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Unload_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	Function.Intrinsic.Control.End
+
+Function.Intrinsic.Control.EndIf
+Program.Sub.Unload.End
+
+Program.Sub.UpdatePrice.Start
+F.Intrinsic.Control.SetErrorHandler("UpdatePrice_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+V.Local..BulkDeclareString(sRet, sFilter, sIn, ssql, sParts, sFile, sLines, sDate, sTime, sPair)
+V.Local.iC.Declare(Long)
+V.Local.iCount.Declare(Long)
+
+Function.Automation.MSExcel.ReadSpreadsheet(V.Args.sRet, V.Local.sRet)
+'Function.Data.DataTable.CreateFromString("EX", V.Local.sRet(0), "PART*!*AMT_PRICE", "STRING*!*STRING", "*!*", "$!$")
+
+
+'additions by FEQ 2/23/2017
+F.Intrinsic.String.Split(V.Local.sRet, "&^&", V.Local.sRet)
+F.Data.DataTable.Create("EX", True)
+F.Data.DataTable.AddColumn("EX", "PART", "String")
+F.Data.DataTable.AddColumn("EX", "AMT_PRICE", "String")
+
+F.Intrinsic.String.Split(V.Local.sRet, "$!$", V.Local.sRet)
+V.Local.iCount.Set(V.Local.sRet.UBound)
+F.Intrinsic.Control.For(V.Local.iC, 0, V.Local.iCount, 1)
+	F.Intrinsic.String.Split(V.Local.sRet(V.Local.iC), "*!*", V.Local.sPair)
+	F.Intrinsic.String.RPad(V.Local.sPair(0), " ", 20, V.Local.sPair(0)) 
+	F.Data.DataTable.AddRow("EX", "PART", V.Local.sPair(0), "AMT_PRICE", V.Local.sPair(1))
+F.Intrinsic.Control.Next(V.Local.iC)
+
+
+Function.Data.DataTable.DeleteRow("EX",0)
+Function.Data.Dictionary.CreateFromDataTable("Dict", "EX", "Part", "AMT_PRICE")
+'Function.Data.Dictionary.ReturnAllPairs("Dict",V.Local.sRet)
+'F.Intrinsic.String.Split(V.Local.sRet, "!*!", V.Local.sRet)
+'F.Intrinsic.String.Replace(V.Local.sRet(0), "*!*", "','",V.Local.sIn)
+'build and save to datatable
+'F.Intrinsic.String.Build("Select rtrim(PART) as Part, LOCATION, AMT_PRICE From INVENTORY_MSTR Where Part In ('{0}')", V.Local.sIn, V.Local.ssql)
+V.Local.ssql.Set("Select * from Inventory_Mstr")
+F.Data.DataTable.CreateFromSQL("Master", "con", V.Local.ssql)
+F.Data.Dictionary.setdefaultreturn("Dict", "AAA")
+F.Data.DataTable.AddColumn("Master", "NewAMT", String)
+F.Data.DataTable.FillFromDictionary("Master", "Dict",  "Part", "NewAMT")
+
+F.Data.DataView.Create("Master", "MasterView", 22, "NewAMT <> 'AAA'", "")
+F.Data.DataView.ToDataTable("Master", "MasterView", "MasterPrime")
+
+F.Data.DataTable.FillFromDictionary("MasterPrime", "Dict", "Part", "AMT_PRICE")
+F.Data.DataTable.RemoveColumn("MasterPrime", "NewAMT")
+F.Data.Dictionary.Close("Dict")
+
+Function.Data.DataTable.SaveToDB("MasterPrime", "con", "INVENTORY_MSTR", "Part*!*LOCATION", 256)
+
+'get row count for number of parts updated
+V.Local.iC.set(V.DataTable.MasterPrime.RowCount)
+'use table EX to find all parts not updated
+F.Data.Dictionary.CreateFromSql("Dict", "con","Select rTrim(Part) as Part, AMT_PRICE From INVENTORY_MSTR")
+F.Data.Dictionary.setdefaultreturn("Dict", -1)
+F.Data.DataTable.FillFromDictionary("EX", "Dict", "Part", "AMT_PRICE")
+V.Local.sFilter.Set("AMT_PRICE = '-1'")
+Function.Data.DataView.Create("EX", "EX_V", 22,V.Local.sFilter, "")
+Function.Data.DataView.ToDataTable("EX", "EX_V","ReturnT")
+Function.Data.Dictionary.CreateFromDataTable("Dict2", "ReturnT", "Part", "AMT_PRICE")
+Function.Data.Dictionary.ReturnAllPairs("Dict2",V.Local.sRet)
+F.Intrinsic.String.Split(V.Local.sRet, "!*!", V.Local.sRet)
+F.Intrinsic.String.Replace(V.Local.sRet(0), "*!*", V.Ambient.NewLine,V.Local.sParts) 
+'create txt
+F.Intrinsic.String.Build("{0}{1}{2}", V.Local.iC, V.Ambient.NewLine, V.Local.sParts, V.Local.sLines)
+'set path
+'set date and time for file path
+F.Intrinsic.String.Format(V.Ambient.Date, "YYYYMMDD", V.Local.sDate)
+Function.Intrinsic.String.TimeStringSec(V.Ambient.Time, V.Local.sTime)
+'create file name
+F.Intrinsic.String.Build("{0}\PARTS_LIST_PRICE_{1}{2}.txt",V.Caller.FilesDir,V.Local.sDate,V.Local.sTime,V.Local.sFile)
+F.Intrinsic.File.String2File(V.Local.sFile, V.Local.sLines)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("UpdatePrice_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4322_Update_PriceList.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	Function.Intrinsic.Control.CallSub(unload)
+Function.Intrinsic.Control.EndIf
+Program.Sub.UpdatePrice.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$DH1$}$1/24/2017 11:11:51 AM$}$False
+Program.Sub.Comments.End
